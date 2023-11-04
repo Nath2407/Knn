@@ -1,11 +1,19 @@
-import math
+# Datos de entrenamiento de Iris con 4 características
+data = [
+    ([5.1, 3.5, 1.4, 0.2], 'setosa'),
+    ([4.9, 3.0, 1.4, 0.2], 'setosa'),
+    ([6.0, 2.2, 4.0, 1.0], 'versicolor'),
+    ([6.1, 2.8, 4.7, 1.2], 'versicolor'),
+    ([6.8, 3.2, 5.9, 2.3], 'virginica'),
+    ([6.3, 3.3, 6.0, 2.5], 'virginica')
+]
 
 # Función para calcular la distancia euclidiana entre dos puntos
 def euclidean_distance(point1, point2):
     distance = 0
     for i in range(len(point1)):
         distance += (point1[i] - point2[i]) ** 2
-    return math.sqrt(distance)
+    return distance ** 0.5
 
 # Función de k-NN para clasificación
 def k_nearest_neighbors(training_data, test_instance, k):
@@ -22,7 +30,7 @@ def k_nearest_neighbors(training_data, test_instance, k):
     # Contar la frecuencia de cada clase en los vecinos cercanos
     class_counts = {}
     for neighbor in neighbors:
-        label = neighbor[0][1]
+        label = neighbor[1]
         if label in class_counts:
             class_counts[label] += 1
         else:
@@ -32,15 +40,12 @@ def k_nearest_neighbors(training_data, test_instance, k):
     max_class = max(class_counts, key=class_counts.get)
     return max_class
 
-# Ejemplo de datos de entrenamiento
-training_data = [([2, 3], 'A'), ([5, 4], 'B'), ([9, 6], 'A'), ([4, 7], 'B')]
-
-# Punto de prueba
-test_point = [6, 5]
+# Punto de prueba con las 4 características
+test_point = [6.0, 3.0, 4.5, 1.5]
 
 # Valor de k (número de vecinos cercanos)
-k = 2
+k = 3
 
 # Clasificar el punto de prueba usando k-NN
-result = k_nearest_neighbors(training_data, test_point, k)
+result = k_nearest_neighbors(data, test_point, k)
 print(f'El punto de prueba pertenece a la clase: {result}')
